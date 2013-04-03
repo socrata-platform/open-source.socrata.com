@@ -6,4 +6,4 @@ exclude: Gemfile, Gemfile.lock, .rvmrc, labs-common
 # ga_tracking_code: "UA-9046230-6"
 subsite: opensource
 subsite_name: Socrata Open Source
-github_repo: "https://github.com/socrata"
+github_repo: "https://github.com/socrata/open-source.socrata.com"

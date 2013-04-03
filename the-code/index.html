@@ -1,0 +1,58 @@
+---
+layout: default
+title: Home
+repos:
+  -
+    name: soql-reference
+    desc: Reference implementation of the SoQL query language.
+  -
+    name: socrata-csv
+    desc: A thin Scalaish wrapper around opencsv
+  -
+    name: socrata-http
+    desc: Rack-inspired toolkit for building HTTP services
+  -
+    name: socrata-utils
+    desc: Utility classes used throughout the Socrata Open Data Server.
+  -
+    name: soql-es-adapter
+    desc: ElasticSearch Secondary Store for SoQL Data Service
+  -
+    name: data-coordinator
+    desc: Something something something.
+---
+
+<div class="hero-unit clearfix">
+  <i class="icon-cloud-download icon-4x pull-left"></i>
+  <h1 class="tagline">Building and Contributing</h1>
+  <p>The Scorata Open Data Server, and the components that make it up, are all available under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License</a>. The system is
+    broken up into a number of different modules that are managed in separate Github repositories and compiled together using <a href="http://maven.apache.org/">Maven</a>.</p>
+
+  <p>To see how these components fit together, read our <a href="/architecture/">architecture document</a>. As we get closer to the final beta release date, we'll also provide documentation
+    and tools to help you get full Open Data Server up and running.</a>
+
+  <hr/>
+  <h2>Contributing</h2>
+
+  <p>Want to contribute? Great! Fork the relevant component on Github, make your changes, and submit them to us as a pull request. We'll review your patch and provide feedback.</a>
+
+  <p>To commit to any of our projects, you need to first complete a Contributor License Agreement.  There are two types of agreements, one for individuals and one for
+    people contributing on behalf of a corporation.  The reasons for requiring this agreement is not to require contributors to hand over their copyrights, but is instead to make sure that
+    anyone using the open source projects have the rights to their free use.  These agreements are the same as the ones required for submitting code to the Apache Foundation, as well as
+    numerous other open source projects.</a>
+
+  <hr />
+  <h2>Our Open Source Components</h2>
+
+  <p>All of our open source code is listed in <a href="http://github.com/socrata/">our Github organization</a>, or you can view a listing below.</p>
+
+  <div class="components">
+    {% for repo in page.repos %}
+    <div class="component repo" data-repo="{{ repo.name}}">
+      <h2><a href="https://github.com/socrata/{{ repo.name }}">{{ repo.name }}</a></h2>
+      <p class="description">{{ repo.desc }}</p>
+      <p><a class="btn" href="https://github.com/socrata/{{ repo.name }}"><i class="icon-github-alt"></i> View on Github&raquo;</a></p>
+    </div>
+    {% endfor %}
+  </div>
+</div>

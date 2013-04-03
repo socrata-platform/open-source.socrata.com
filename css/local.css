@@ -1,0 +1,15 @@
+.actions {
+  position: relative;
+  height: 220px; }
+  .actions .description {
+    position: absolute;
+    top: 100px;
+    width: 31.62393%; }
+  .actions .btn {
+    position: absolute;
+    top: 190px; }
+
+.components .component {
+  padding-top: 30px;
+  width: 50%;
+  float: left; }
