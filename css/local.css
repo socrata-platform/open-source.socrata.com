@@ -1,15 +1,16 @@
 .actions {
   position: relative;
-  height: 220px; }
+  height: 230px; }
   .actions .description {
     position: absolute;
     top: 100px;
     width: 31.62393%; }
   .actions .btn {
     position: absolute;
-    top: 190px; }
+    top: 210px; }
 
 .components .component {
   padding-top: 30px;
-  width: 50%;
+  padding-right: 5%;
+  width: 40%;
   float: left; }
