@@ -34,17 +34,17 @@ We addressed these issues by creating an architecture that does a couple of impo
 ### The Write Path
 
 1. An application or process starts off the whole thing by sending an insert, upsert, or delete operation to the SODA Server. This will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on dev.socrata.com.
-2. The request will be turned into a series of more granular operations called "mutations" and passed into the Data Coordinator which will then run those mutations over the truth store (in this case Postgres) in a transactional way.
-3. After the Data Coordinator is finished, the Secondary Watcher will wake-up and look to see if there are any changes in the truth store that have not been synced lately. This may often be called right after the truth is updated, but in order to be resilient to crashes and other failures, the design does not require this.
-4. The adaptor for the secondary store, in this case Elastic Search, then imports the data from the primary. The mechanism is built so that it will only get notifications for the records that have changed, however, in the case of dramatic failures or having to rebuild, can also do a full re-sync from scratch.
+2. The request will be turned into a series of more granular operations called "mutations" and passed into the Data Coordinator which will then run those mutations over the truth store (in this case Postgres) in a transactional manner.
+3. After the Data Coordinator is finished, the Secondary Watcher will wake-up and see if there are any changes in the truth store that have not been synced lately. This may often be called right after the truth is updated, but in order to be resilient to crashes and other failures, the design does not require this.
+4. The adaptor for the secondary store, in this case Elastic Search, then imports the data from the primary. The mechanism is built so that it will only get notifications for the records that have changed; however, in the case of dramatic failures or having to rebuild, the secondary store can also do a full re-sync from scratch.
 
 The main components that implement the write stages are in the data-coordinator repository (<https://github.com/socrata/data-coordinator>) for steps #2 &amp; #3. Then the soql-es-adaptor repository for step #4 (<https://github.com/socrata/soql-es-adapter>), in particular the store-es project in it.
 
 ### The Read Path
 
-1. An application sends a SoQL request to the server. This will be parsed with the parser in soql-reference, and will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on dev.socrata.com.
-2. The Query Coordinator will make a determination about which store the request should go to. In the future, there may be many different secondary stores and more sophisticated ways to route requests, however, for this version there will only be routing for "truth" and everything else.
-3. The Query Coordinator will then hand off the query to the appropriate adaptor, which will execute the query against the correct store and return the appropriate C-JSON payload.
+1. An application sends a SoQL request to the server. This will be parsed with the parser in soql-reference and will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on dev.socrata.com.
+2. The Query Coordinator will make a determination about which store the request should go to. In the future, there may be many different secondary stores and more sophisticated ways to route requests; however, for this version there will only be routing for "truth" and everything else.
+3. The Query Coordinator will then hand off the query to the appropriate adaptor, that will execute the query against the correct store and return the appropriate C-JSON payload.
 
 In this flow, step A uses the soql-reference project (<https://github.com/socrata/soql-reference>) for lexing, parsing, and analyzing the SoQL that is passed in. You can also look in that repository for a file describing a more precise language definition of SoQL. Step C is then mainly implemented in the adaptors. The most interesting of these right now is the Elastic Search adaptor in <https://github.com/socrata/soql-es-adapter>.
 
@@ -54,9 +54,9 @@ For the last part of this architecture discussion, I wanted to take a little sec
 
 ### Extending the SODA Server
 
-One of the primary goals of the SODA Server is to easily be extensible for other secondary or truth stores that people want to add. For example, large datasets may want to live on a Hadoop or HBASE cluster. Real-time data may want to have a Cassandra truth store and relax the transactional guarantees (but keep the same APIs). Frequently accessed datasets may want to live on a secondary store with all SSD storage. Less frequently accessed datasets may want to live on a secondary with big, cheap disks. Building out the appropriate architecture will allow the SODA Server to handle these many cases in consistent ways.
+One of the primary goals of the SODA Server is to easily be extensible for other secondary or truth stores that people want to add. For example, large datasets may want to live on a Hadoop or HBase cluster. Real-time data may want to have a Cassandra truth store and relax the transactional guarantees (but keep the same APIs). Frequently accessed datasets may want to live on a secondary store with all SSD storage. Less frequently accessed datasets may want to live on a secondary with big, cheap disks. Building out the appropriate architecture will allow the SODA Server to handle these cases in a consistent way.
 
-In addition, though, there is a more interesting approach we've talked about where we can add functionality as additional secondary stores. For example, one interesting operation we would like to see as part of an open data substrate is the ability to keep datasets synchronized across different stores. Whatever protocol we decide on for this synchronization could be implemented by a secondary store that can be reliably notified of changes and then create a purpose-built data structures to be able to provide the synchronization APIs.
+In addition, though, there is a more interesting approach we've talked about where we can add functionality as additional secondary stores. For example, one interesting operation we would like to see as part of an open data substrate is the ability to keep datasets synchronized across different stores outside of our datacenter. Whichever protocol we decide on for this synchronization could be implemented by a secondary store that can be reliably notified of changes and then create a purpose-built data structures to be able to provide the synchronization APIs.
 
 ### SODA Server in the Open Data Ecosystem
 
