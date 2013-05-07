@@ -12,7 +12,7 @@ title: Open Source Philosophy
 ## Socrata Releases "Open Source Data Server, Community Edition"
 
 
-Three months ago, we announced that Socrata has started working on an open source option we call the "Socrata Open Data Server, Community Edition." This is the core piece of our technology that powers our SaaS platform and an equally important part of our strategy to promote worldwide adoption of open data standards. I blogged about this here, and here.
+Three months ago, we announced that Socrata had started working on an open source option we call the "Socrata Open Data Server, Community Edition." This is the core piece of our technology that powers our SaaS platform and an equally important part of our strategy to promote worldwide adoption of open data standards. I blogged about this here, and here.
 
 Let's quickly recap why Socrata has committed to this project. 
 
