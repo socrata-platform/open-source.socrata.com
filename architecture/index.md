@@ -33,7 +33,7 @@ We addressed these issues by creating an architecture that does a couple of impo
 
 ### The Write Path
 
-1. An application or process starts off the whole thing by sending an insert, upsert, or delete operation to the SODA Server. This will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on dev.socrata.com.
+1. An application or process starts off the whole thing by sending an insert, upsert, or delete operation to the SODA Server. This will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on <http://dev.socrata.com/>.
 2. The request will be turned into a series of more granular operations called "mutations" and passed into the Data Coordinator which will then run those mutations over the truth store (in this case Postgres) in a transactional way.
 3. After the Data Coordinator is finished, the Secondary Watcher will wake-up and look to see if there are any changes in the truth store that have not been synced lately. This may often be called right after the truth is updated, but in order to be resilient to crashes and other failures, the design does not require this.
 4. The adaptor for the secondary store, in this case Elastic Search, then imports the data from the primary. The mechanism is built so that it will only get notifications for the records that have changed, however, in the case of dramatic failures or having to rebuild, can also do a full re-sync from scratch.
@@ -42,7 +42,7 @@ The main components that implement the write stages are in the data-coordinator 
 
 ### The Read Path
 
-1. An application sends a SoQL request to the server. This will be parsed with the parser in soql-reference, and will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on dev.socrata.com.
+1. An application sends a SoQL request to the server. This will be parsed with the parser in soql-reference, and will be exactly the same in format and semantics as what is covered in the Socrata SODA API documentation on <http://dev.socrata.com/>.
 2. The Query Coordinator will make a determination about which store the request should go to. In the future, there may be many different secondary stores and more sophisticated ways to route requests, however, for this version there will only be routing for "truth" and everything else.
 3. The Query Coordinator will then hand off the query to the appropriate adaptor, which will execute the query against the correct store and return the appropriate C-JSON payload.
 
