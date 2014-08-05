@@ -6,7 +6,7 @@ title: Open Source Philosophy
 <div class="hero-unit clearfix">
   <i class="icon-heart icon-4x pull-left"><!-- This space left blank --></i>
   <h1 class="tagline">Open Source Philosophy</h1>
-  <p>A message from our CTO, Will Pugh.</p>
+  <!--<p>A message from our CTO, Will Pugh.</p>-->
 </div>
 
 ## Socrata Releases "Open Source Data Server, Community Edition"
